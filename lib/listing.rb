@@ -1,4 +1,5 @@
 class Listing
+  attr_reader :name, :bio, :guest
   def initialize(name, bio, guest)
     @name = name
     @bio = bio
