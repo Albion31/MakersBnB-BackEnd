@@ -1,14 +1,11 @@
 require 'data_mapper'
 require 'dm-postgres-adapter'
 
-class Listing
+class User
   include DataMapper::Resource
 
   property :id, Serial
-  property :name, String
-  property :bio, String
-  property :guests, Integer
-
+  # log in details required at later stage
 end
 
 DataMapper.setup(:default, "postgres://localhost/makersbnb_#{ENV['RACK_ENV']}")

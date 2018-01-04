@@ -13,13 +13,11 @@ feature 'Viewing links' do
   # scenario 'I can create a new listing on the page' do
   #
   #   visit '/listings'
-  #   fill_in :name, with: 'Makers'
-  #   fill_in 'bio', with: 'Academy'
-  #   fill_in 'guests', with: 4
+  #   fill_in '#name', with: 'Makers'
+  #   fill_in '#bio', with: 'Academy'
+  #   fill_in '#guests', with: 4
   #   click_button('submit')
-  #
-  #
-  #     expect(page).to have_content('Markers')
+  #   expect(page).to have_content('Markers')
   # end
 
   # scenario 'I can see a submit button on the page' do

@@ -2,7 +2,7 @@ ENV["RACK_ENV"] = "test"
 require 'sinatra'
 require 'capybara'
 # require 'orderly'
-# require 'database_cleaner'
+require 'database_cleaner'
 require 'rspec'
 require 'capybara/rspec'
 # require 'simplecov'
@@ -31,19 +31,19 @@ RSpec.configure do |config|
     # puts "\e[33mHave you considered running rubocop? It will help you improve your code!\e[0m"
     # puts "\e[33mTry it now! Just run: rubocop\e[0m"
   end
-  #
-  # config.before(:suite) do
-  #   DatabaseCleaner.strategy = :transaction
-  #   DatabaseCleaner.clean_with(:truncation)
-  # end
-  #
-  # # Everything in this block runs once before each individual test
-  # config.before(:each) do
-  #   DatabaseCleaner.start
-  # end
-  #
-  # # Everything in this block runs once after each individual test
-  # config.after(:each) do
-  #   DatabaseCleaner.clean
-  # end
+
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  # Everything in this block runs once before each individual test
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  # Everything in this block runs once after each individual test
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
 end
