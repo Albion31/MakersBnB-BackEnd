@@ -1,4 +1,5 @@
 ENV["RACK_ENV"] ||= "development"
+# DataMapper.setup(:default, "postgres://localhost/makersbnb_#{ENV["RACK_ENV"]}")
 
 require 'sinatra/base'
 require './lib/listing.rb'

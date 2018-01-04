@@ -2,18 +2,18 @@ ENV["RACK_ENV"] = "test"
 require 'sinatra'
 require 'capybara'
 # require 'orderly'
-require 'database_cleaner'
+# require 'database_cleaner'
 require 'rspec'
 require 'capybara/rspec'
 # require 'simplecov'
 # require 'simplecov-console'
 # require 'features/web_helpers'
 # require 'features/helper/session'
-# require './app/models/peep'
+require './app/models/listing'
 require './app/makersbnb'
-# require File.join(File.dirname(__FILE__), '..', 'app/app.rb')
+require File.join(File.dirname(__FILE__), '..', 'app/makersbnb.rb')
 
-# Capybara.app = Chitter
+Capybara.app = Makersbnb
 
 # SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
 #   SimpleCov::Formatter::Console,
