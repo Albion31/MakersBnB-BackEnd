@@ -8,6 +8,7 @@ class Listing
   property :name, String
   property :bio, String
   property :guests, Integer
+  property :location, String
 
 end
 

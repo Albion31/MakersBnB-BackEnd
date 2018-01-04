@@ -13,13 +13,13 @@ class Makersbnb < Sinatra::Base
     headers 'Access-Control-Allow-Origin' => '*'
     content_type :json
     entries = Listing.all
-    entries.map{ |entry| { name: entry.name, bio: entry.bio, guests: entry.guests }}.to_json
+    entries.map{ |entry| { name: entry.name, bio: entry.bio, guests: entry.guests, location: entry.location }}.to_json
   end
 
   post '/listings' do
     headers 'Access-Control-Allow-Origin' => '*'
     data = JSON.parse(request.body.read)
-    Listing.create(name: data['name'], bio: data['bio'],guests: data['guests'])
+    Listing.create(name: data['name'], bio: data['bio'],guests: data['guests'], location: data['location'])
     p Listing.last
   end
 
