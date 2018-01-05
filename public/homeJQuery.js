@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+  getUsername()
+
   $('#host').click(function() {
     console.log('click')
     $("#info").load("host.html");
@@ -9,23 +11,29 @@ $(document).ready(function() {
     $("#info").load("book.html");
   })
 
-  $('#signup_button').click(function() {
-    var username = $('#username').val();
-    var email = $('#email').val();
-    var password = $('#password').val();
-    var password_confirm = $('#password-confirmation').val();
-    var newEntry = {username: username, email: email, password: password, password_confirm: password_confirm};
-    sendToServer(newEntry);
-
+  $('#sign-up').click(function() {
+    $("#info").load("signup.html");
   })
+
+
 })
 
-function sendToServer(newEntry) {
-  var entry = JSON.stringify(newEntry);
-  $.ajax({
-      type: 'POST',
-      url: 'http://localhost:9292/users',
-      data: entry,
-      dataType: 'json'
-});
+
+function getUsername(){
+  $.get('http://localhost:9292/users', function(user){
+    if(user) {
+      $("#user").text("Signed in as: " + user.username)
+    }
+  })
+}
+
+
+function getListings() {
+  $.get('http://localhost:9292/listings', function(listings) {
+    if($('#list_of_listings').children().length == 0) {
+      populateList(listings)
+    } else {
+      updateList(listings)
+    }
+  })
 }
