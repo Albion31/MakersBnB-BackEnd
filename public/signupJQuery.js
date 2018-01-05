@@ -14,7 +14,7 @@ function sendToServer(newEntry) {
 var entry = JSON.stringify(newEntry);
 $.ajax({
     type: 'POST',
-    url: 'http://localhost:9292/users',
+    url: 'http://localhost:9292/users/new',
     data: entry,
     dataType: 'json'
 });

@@ -13,8 +13,6 @@ class Makersbnb < Sinatra::Base
 
   helpers do
     def current_user
-      p session[:username]
-      #binding.pry
       @current_user ||= User.first(username: session[:username])
     end
   end
@@ -27,7 +25,6 @@ class Makersbnb < Sinatra::Base
     headers 'Access-Control-Allow-Origin' => '*'
     content_type :json
     entries = Listing.all
-    # p current_user.username
     entries.map{ |entry| { name: entry.name, bio: entry.bio, guests: entry.guests, location: entry.location }}.to_json
   end
 
@@ -37,7 +34,7 @@ class Makersbnb < Sinatra::Base
     Listing.create(name: data['name'], bio: data['bio'],guests: data['guests'], location: data['location'])
   end
 
-  get '/users' do
+  get '/users/current-user' do
     headers 'Access-Control-Allow-Origin' => '*'
     content_type :json
     if !!current_user
@@ -45,12 +42,26 @@ class Makersbnb < Sinatra::Base
     end
   end
 
-  post '/users' do
+  post '/users/new' do
     headers 'Access-Control-Allow-Origin' => '*'
     data = JSON.parse(request.body.read)
     user = User.create(username: data['username'], email: data['email'], password: data['password'], password_confirmation: data['password_confirmation'])
-    p user
     session[:username] = user.username
+  end
+
+  post '/users/sign-in' do
+    headers 'Access-Control-Allow-Origin' => '*'
+    data = JSON.parse(request.body.read)
+    user = User.authenticate(data['username'], data['password'])
+    if !!user
+      session[:username] = user.username
+      redirect '/'
+    end
+  end
+
+  get '/users/sign-out' do
+    session[:username] = nil
+    redirect '/'
   end
 
   run! if app_file == $0
