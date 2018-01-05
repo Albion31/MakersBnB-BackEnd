@@ -4,6 +4,7 @@ require_relative 'data_mapper_setup'
 require 'sinatra/base'
 require_relative './models/listing.rb'
 require 'json'
+require 'pry'
 
 class Makersbnb < Sinatra::Base
   set :public_folder, 'public'
@@ -12,6 +13,8 @@ class Makersbnb < Sinatra::Base
 
   helpers do
     def current_user
+      p session[:username]
+      #binding.pry
       @current_user ||= User.first(username: session[:username])
     end
   end
@@ -32,30 +35,22 @@ class Makersbnb < Sinatra::Base
     headers 'Access-Control-Allow-Origin' => '*'
     data = JSON.parse(request.body.read)
     Listing.create(name: data['name'], bio: data['bio'],guests: data['guests'], location: data['location'])
-    p Listing.last
   end
 
   get '/users' do
     headers 'Access-Control-Allow-Origin' => '*'
     content_type :json
-    p current_user
-    {username: current_user.username}.to_json if !!current_user
-
+    if !!current_user
+      {username: current_user.username}.to_json
+    end
   end
 
   post '/users' do
-    #begin
-      headers 'Access-Control-Allow-Origin' => '*'
-      data = JSON.parse(request.body.read)
-      user = User.create(username: data['username'], email: data['email'], password: data['password'])
-      session[:username] = user.username
-      p session[:username]
-    #  session[:user_id] = user.id
-    #rescue Exception => e
-      #p e.message
-      #p e.backtrace.inspect
-    #end
-    # {user_id: user.id}.to_json
+    headers 'Access-Control-Allow-Origin' => '*'
+    data = JSON.parse(request.body.read)
+    user = User.create(username: data['username'], email: data['email'], password: data['password'], password_confirmation: data['password_confirmation'])
+    p user
+    session[:username] = user.username
   end
 
   run! if app_file == $0

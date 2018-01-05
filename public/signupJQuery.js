@@ -3,8 +3,8 @@ $('#signup_button').click(function() {
   var username = $('#username').val();
   var email = $('#email').val();
   var password = $('#password').val();
-  var password_confirm = $('#password-confirmation').val();
-  var newEntry = {username: username, email: email, password: password, password_confirm: password_confirm};
+  var password_confirmation = $('#password_confirmation').val();
+  var newEntry = {username: username, email: email, password: password, password_confirmation: password_confirmation};
   sendToServer(newEntry);
   console.log('clicked')
 })
